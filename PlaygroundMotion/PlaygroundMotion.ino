@@ -14,7 +14,7 @@ void loop() {
   Y = CircuitPlayground.motionY();
   Z = CircuitPlayground.motionZ();
  
-   // Get the magnitude (length) of the 3 axis vector
+  // Get the magnitude (length) of the 3 axis vector
   // http://en.wikipedia.org/wiki/Euclidean_vector#Length
   double storedVector = X*X;
   storedVector += Y*Y;
@@ -37,7 +37,6 @@ void loop() {
   
   // are we moving 
   if (abs(10*newVector - 10*storedVector) > MOVE_THRESHOLD) {
-    Serial.println("Twinkle!");
 
     for (int x=0; x<10; x++){
     int randomCol1 = random(255); 
