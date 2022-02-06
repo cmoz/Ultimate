@@ -39,10 +39,10 @@ void loop() {
   if (abs(10*newVector - 10*storedVector) > MOVE_THRESHOLD) {
 
     for (int x=0; x<10; x++){
-    int randomCol1 = random(255); 
-    int randomCol2 = random(255);
-    int randomCol3 = random(255);
-    int randomPos = random(10);
+    int randomValR = random(255); 
+    int randomValG = random(255);
+    int randomValB = random(255);
+    int randomNeoPos = random(10);
     CircuitPlayground.setPixelColor(randomPos, randomCol1,  randomCol2,   randomCol3);
 
     }
