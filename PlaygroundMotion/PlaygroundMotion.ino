@@ -1,7 +1,7 @@
 #include <Adafruit_CircuitPlayground.h>
 
 float X, Y, Z;
-#define MOVE_THRESHOLD 3
+#define MOVE_THRESHOLD 5 //To 10, lower the number more sensitive
 
 void setup() {
   Serial.begin(9600);
@@ -43,8 +43,9 @@ void loop() {
     int randomValG = random(255);
     int randomValB = random(255);
     int randomNeoPos = random(10);
-    CircuitPlayground.setPixelColor(randomPos, randomCol1,  randomCol2,   randomCol3);
+    CircuitPlayground.setPixelColor(randomNeoPos, randomValR,  randomValG,   randomValB);
 
+    x = randomNeoPos; 
     }
   }
   
