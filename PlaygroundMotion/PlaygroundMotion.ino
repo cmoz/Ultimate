@@ -1,7 +1,7 @@
 #include <Adafruit_CircuitPlayground.h>
 
 float X, Y, Z;
-#define MOVE_THRESHOLD 5 //To 10, lower the number more sensitive
+#define MOVE_THRESHOLD 3 //To 10, lower the number more sensitive
 
 void setup() {
   Serial.begin(9600);
@@ -38,14 +38,18 @@ void loop() {
   // are we moving 
   if (abs(10*newVector - 10*storedVector) > MOVE_THRESHOLD) {
 
-    for (int x=0; x<10; x++){
+    for (int x=0; x<6; x++){
+
     int randomValR = random(255); 
     int randomValG = random(255);
     int randomValB = random(255);
     int randomNeoPos = random(10);
     CircuitPlayground.setPixelColor(randomNeoPos, randomValR,  randomValG,   randomValB);
 
+delay(100);
+
     x = randomNeoPos; 
+
     }
   }
   
