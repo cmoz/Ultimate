@@ -2,7 +2,7 @@
  *  2022 @cmoz
  *  
  *  This code is for a circuit created for the Circuit Playground boards
- *  It uses a Circuit Plaground Classic, sewable UV sensor, a battery, 
+ *  It uses a Circuit Playground Classic, sewable UV sensor, battery, 
  *  battery charger, and vibration motor, onboard sound and NeoPixels
  *  
  *  Program:   Wearable UV sensor on a cap to detect UV rating outside
@@ -13,7 +13,6 @@
  *             Hat will vibrate, NeoPixels will change color, sound will happen
  *             
  */
-
 
 #include <Adafruit_CircuitPlayground.h>
 #include "Adafruit_SI1145.h"
@@ -47,15 +46,15 @@ void loop() {
     if(uv.readUV()>= UVthresholdIndoors && uv.readUV()<689 )
     {
       Serial.println("LOW");
-      neoColor(0,255,100);
-      digitalWrite(vibePin, LOW);
+      neoColor(0,255,100); //blue color
+      digitalWrite(vibePin, LOW); // no vibration if we are indoors or low reading
     } else 
   
     if(uv.readUV()>=690 && uv.readUV()<1379) 
     {
       Serial.println("Moderate");
       CircuitPlayground.playTone(345, 200);
-      neoColor(255,191,0);
+      neoColor(255,191,0); //yellow color
       vibrationWarn(100, 5);
     } else 
   
@@ -63,7 +62,7 @@ void loop() {
     {
       Serial.println("High");
       CircuitPlayground.playTone(445, 200);
-      neoColor(255,0,255);
+      neoColor(255,0,255); // purple color
       vibrationWarn(200, 10);
     } else
   
@@ -71,7 +70,7 @@ void loop() {
     {
       Serial.println("Very High");
       CircuitPlayground.playTone(655, 400);
-      neoColor(244,30,30);
+      neoColor(244,30,30); // red color
       vibrationWarn(300, 15);
     }
   
@@ -79,13 +78,16 @@ void loop() {
     {
       Serial.println("Extreme high");
       CircuitPlayground.playTone(755, 600);
-      neoColor(255,0,0);
+      neoColor(255,0,0); //full red color
       vibrationWarn(400, 20);
     }
 
   delay(1000);
 } 
 
+// +++ Functions for the code
+
+// Function to change the colors of NeoPixels
 void neoColor(int r, int g,int b){
   for (int neoPin = 0; neoPin <=10; neoPin++){
   CircuitPlayground.setPixelColor(neoPin,r,g,b);
@@ -93,6 +95,7 @@ void neoColor(int r, int g,int b){
   }
 }
 
+// Function for the vibration to be different depending on the danger 
 void vibrationWarn(int pulseDuration, int amount){
   for (int loops = 0; loops <= amount; loops++){
       digitalWrite(vibePin, HIGH);
