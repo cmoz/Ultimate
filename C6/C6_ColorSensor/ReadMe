@@ -1,0 +1,9 @@
+This is for Activity 6.1 Part 1: Color Sense
+
+To connect the sewable color sensor and Flora:
+•	Sensor 3V to Flora 3.3V
+•	Sensor GND to Flora GND 
+•	Sensor SCL to I2C Clock on Flora (SCL pin 3)
+•	Sensor SDA to I2C Data on Flora (SDA pin 2)
+
+Library needed: Adafruit TCS34625 
