@@ -1,3 +1,19 @@
+/* 
+ *  2022 @cmoz
+ *  
+ *  This code is for a circuit created for the Circuit Playground boards
+ *  It uses a Circuit Plaground Classic, sewable UV sensor, a battery, 
+ *  battery charger, and vibration motor, onboard sound and NeoPixels
+ *  
+ *  Program:   Wearable UV sensor on a cap to detect UV rating outside
+ *             Circuit: UV sensor (SDA/SCL pins)
+ *             vibration motor (pin 1)
+ *             
+ *             If UV rating is higher than an indoor rating:
+ *             Hat will vibrate, NeoPixels will change color, sound will happen
+ *             
+ */
+
 #include <Adafruit_CircuitPlayground.h>
 #include "Adafruit_SI1145.h"
 
@@ -71,7 +87,8 @@ Serial.println(uv.readUV());
 delay(1000);
 } 
 
-void neoColor(int r, int g,int b){
+// a little function to change the NeoPixel colors 
+void neoColor(int r, int g, int b){
   for (int neoPin = 0; neoPin <=10; neoPin++){
   CircuitPlayground.setPixelColor(neoPin,r,g,b);
   delay(20);
