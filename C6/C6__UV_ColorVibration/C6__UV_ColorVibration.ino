@@ -4,7 +4,7 @@
 Adafruit_SI1145 uv = Adafruit_SI1145();
 
 float UVthresholdIndoors = 2;
-int vibePin = A0;
+int vibePin = 1;
 
 void setup() {
 Serial.begin(9600);
