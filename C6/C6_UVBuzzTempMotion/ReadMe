@@ -1,4 +1,4 @@
-Activity 6.7 Using temperature and motion
+Activity 6.7 Using temperature and motion (CAP/HAT DESIGN)
 
 The circuit has a fan, diode, transistor, and resistor.  
 The axial fan is connected to pin A1 in the code which is marked TX1 on the Circuit Playground Classic board.
