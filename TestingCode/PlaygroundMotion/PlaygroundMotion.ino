@@ -25,7 +25,7 @@ void loop() {
   // wait a bit
   delay(100);
   
-  // get new data!
+  // get new data
   X = CircuitPlayground.motionX();
   Y = CircuitPlayground.motionY();
   Z = CircuitPlayground.motionZ();
@@ -35,16 +35,17 @@ void loop() {
   newVector = sqrt(newVector);
   Serial.print("New Len: "); Serial.println(newVector);
   
-  // are we moving 
+  // movement 
   if (abs(10*newVector - 10*storedVector) > MOVE_THRESHOLD) {
 
-    for (int x=0; x<6; x++){
+    for (int x=0; x<10; x++){
 
     int randomValR = random(255); 
     int randomValG = random(255);
     int randomValB = random(255);
     int randomNeoPos = random(10);
-    CircuitPlayground.setPixelColor(randomNeoPos, randomValR,  randomValG,   randomValB);
+    CircuitPlayground.setPixelColor(randomNeoPos, 
+                                    randomValR,  randomValG,   randomValB);
 
 delay(100);
 
