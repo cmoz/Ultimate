@@ -1,5 +1,5 @@
 /*
- * This is un example how to use Touch Intrrerupts
+ * This is an example how to use Touch Interrupts
  * The bigger the threshold, the more sensitive the touch
  * Testing 3 touch input pins 
  * 
