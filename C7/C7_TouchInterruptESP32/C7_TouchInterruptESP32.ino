@@ -10,18 +10,6 @@ bool touch1detected = false;
 bool touch2detected = false;
 bool touch3detected = false;
 
-void gotTouch1(){
- touch1detected = true;
-}
-
-void gotTouch2(){
- touch2detected = true;
-}
-
-void gotTouch3(){
- touch3detected = true;
-}
-
 void setup() {
   Serial.begin(115200);
   delay(1000); // give me time to bring up serial monitor
@@ -44,4 +32,16 @@ void loop(){
     touch3detected = false;
     Serial.println("Touch 3 detected: GPIO 4");
   }
+}
+
+void gotTouch1(){
+ touch1detected = true;
+}
+
+void gotTouch2(){
+ touch2detected = true;
+}
+
+void gotTouch3(){
+ touch3detected = true;
 }
