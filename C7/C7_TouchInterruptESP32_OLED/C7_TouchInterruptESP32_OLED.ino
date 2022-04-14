@@ -1,4 +1,7 @@
-/*
+/* @cmoz
+ *  
+ * Activity 7.6: Adding an OLED for displaying information
+ * 
  * This is an example how to use Touch Interrupts
  * The bigger the threshold, the more sensitive the touch
  * Testing 3 touch input pins 
@@ -54,7 +57,7 @@ void loop(){
     oled.clearDisplay();
     oled.setTextSize(3);          // text size
     oled.setTextColor(WHITE);     // text color
-    oled.setCursor(0, 10);        // position to display
+    oled.setCursor(0, 20);        // position to display
     oled.println("Touch 1");      // text to display
     oled.display();               // show on OLED
     delay(2000);
@@ -65,8 +68,8 @@ void loop(){
     oled.clearDisplay();
     oled.setTextSize(3);          // text size
     oled.setTextColor(WHITE);     // text color
-    oled.setCursor(0, 10);        // position to display
-    oled.println("Touch 1");      // text to display
+    oled.setCursor(0, 20);        // position to display
+    oled.println("Touch 2");      // text to display
     oled.display();               // show on OLED
     delay(2000);
   }
@@ -74,10 +77,14 @@ void loop(){
     touch3detected = false;
     Serial.println("Touch 3 detected: GPIO 4");
     oled.clearDisplay();
+    oled.setTextSize(1);          // text size
+    oled.setTextColor(WHITE);     // text color
+    oled.setCursor(0, 0);        // position to display
+    oled.println("Touched");      // text to display
     oled.setTextSize(3);          // text size
     oled.setTextColor(WHITE);     // text color
-    oled.setCursor(0, 10);        // position to display
-    oled.println("Touch 1");      // text to display
+    oled.setCursor(0, 20);        // position to display
+    oled.println("Three");      // text to display
     oled.display();               // show on OLED
     delay(2000);
   }
