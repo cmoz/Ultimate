@@ -1,6 +1,6 @@
 /* 
  *  Works on Flora and Circuit Playground boards. Will need to modify for the 
- *  NeoPixel strip is all, depending on the board.s
+ *  NeoPixel strip is all, depending on the board
  *  
  *  OLED using I2C
  *  KEYBOARD USB to input the HEX code into where their curcor is
@@ -13,7 +13,7 @@
 
 
 #include "Keyboard.h"
-#include <Wire.h>                  //include Wire.h to be able to communicate through I2C on Arduino board
+#include <Wire.h>                  //include Wire.h to be able to communicate through I2C
 #include <Adafruit_CircuitPlayground.h>
 
 #include "Adafruit_TCS34725.h"     //Colour sensor library
@@ -63,10 +63,7 @@ void setup() {
   CircuitPlayground.strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
 
   pinMode(pushButton, INPUT);
-  Keyboard.begin();3D8267
-  3D8367
-  3C8267
-  
+  Keyboard.begin();
 }
 
 void loop() {
@@ -93,7 +90,6 @@ void loop() {
   r *= 256; g *= 256; b *= 256;
 
   int buttonState = digitalRead(pushButton);
-
   
   if (buttonState == HIGH) {
     Keyboard.print((int)r, HEX);
@@ -119,7 +115,7 @@ void loop() {
 
   colorWipe(CircuitPlayground.strip.Color(r, g, b), 50);
 
-  oled.clearDisplay();          // clear displa
+  oled.clearDisplay();          // clear display
 
   oled.setTextSize(1);          // text size
   oled.setTextColor(WHITE);     // text color
@@ -139,7 +135,6 @@ void loop() {
   oled.display();                // show on OLED
 
   delay(2000);
-
 
 }
 
