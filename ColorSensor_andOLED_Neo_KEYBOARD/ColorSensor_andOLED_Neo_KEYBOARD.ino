@@ -1,6 +1,6 @@
 /* 
  *  Works on Flora and Circuit Playground boards. Will need to modify for the 
- *  NeoPixel strip is all, depending on the board
+ *  NeoPixel strip is all, depending on the board.s
  *  
  *  OLED using I2C
  *  KEYBOARD USB to input the HEX code into where their curcor is
@@ -13,13 +13,14 @@
 
 
 #include "Keyboard.h"
-#include <Wire.h>                  //include Wire.h to be able to communicate through I2C
-#include <Adafruit_CircuitPlayground.h>
+#include <Wire.h>                  //include Wire.h to be able to communicate through I2C on Arduino board
+//#include <Adafruit_CircuitPlayground.h>
 
 #include "Adafruit_TCS34725.h"     //Colour sensor library
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
-//#include "Adafruit_NeoPixel.h" 
+
+#include "Adafruit_NeoPixel.h" 
 
 //Create colour sensor object declaration, to see effects of different integration time and gain
 //settings, check the datatsheet of the Adafruit TCS34725.
@@ -33,14 +34,17 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS3472
 
 int pushButton = 12;
 int previousButtonState = HIGH;
-//Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+// comment this out if using circuit playground
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // declare an SSD1306 display object connected to I2C
 Adafruit_SSD1306 oled(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 void setup() {
   Serial.begin(9600);
-  CircuitPlayground.begin();
+  
+  //CircuitPlayground.begin();
 
   // initialize OLED display with address 0x3C for 128x64
   if (!oled.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
@@ -58,16 +62,19 @@ void setup() {
     while (1); // halt!
   }
 
+  /*
   CircuitPlayground.strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
   CircuitPlayground.strip.show();            // Turn OFF all pixels ASAP
   CircuitPlayground.strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
+  */
+  
+  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();            // Turn OFF all pixels ASAP
+  strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
 
   pinMode(pushButton, INPUT);
   Keyboard.begin();
-<<<<<<< HEAD
 
-=======
->>>>>>> aa0eaa988cc233ee694de5a80899473fea648035
 }
 
 void loop() {
@@ -94,6 +101,7 @@ void loop() {
   r *= 256; g *= 256; b *= 256;
 
   int buttonState = digitalRead(pushButton);
+
   
   if (buttonState == HIGH) {
     Keyboard.print((int)r, HEX);
@@ -119,7 +127,7 @@ void loop() {
 
   colorWipe(CircuitPlayground.strip.Color(r, g, b), 50);
 
-  oled.clearDisplay();          // clear display
+  oled.clearDisplay();          // clear displa
 
   oled.setTextSize(1);          // text size
   oled.setTextColor(WHITE);     // text color
@@ -144,8 +152,14 @@ void loop() {
 
 void colorWipe(uint32_t color, int wait) {
   for (int i = 0; i < CircuitPlayground.strip.numPixels(); i++) { // For each pixel in strip...
+    /*
     CircuitPlayground.strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
     CircuitPlayground.strip.show();                          //  Update strip to match
+    */
+    
+    strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
+    strip.show();                          //  Update strip to match
+    
     delay(wait);                           //  Pause for a moment
   }
 }
