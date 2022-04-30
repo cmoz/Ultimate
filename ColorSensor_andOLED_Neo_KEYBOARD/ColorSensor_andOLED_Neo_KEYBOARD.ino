@@ -4,7 +4,7 @@
  *  
  *  OLED using I2C
  *  KEYBOARD USB to input the HEX code into where their curcor is
- *  Uses  button to press to copy the code to text file
+ *  Uses button / conductive fabric to press to copy the code to text file
  *  
  *  NEOs on PIN 10
  *  BUTTON on PIN 12 
@@ -63,10 +63,8 @@ void setup() {
   CircuitPlayground.strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
 
   pinMode(pushButton, INPUT);
-  Keyboard.begin();3D8267
-  3D8367
-  3C8267
-  
+  Keyboard.begin();
+
 }
 
 void loop() {

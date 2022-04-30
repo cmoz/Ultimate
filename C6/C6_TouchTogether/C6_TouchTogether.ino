@@ -35,34 +35,50 @@ void loop() {
   
  if  (capsense[0] > 100) {
     frequency = 523;
-    CircuitPlayground.setPixelColor(0,75,0,130);
+    for (int x = 0; x < 10; x++){
+    CircuitPlayground.setPixelColor(x,75,0,130);
+    }
     vibration();
   } else if  (capsense[1] > 100) {
     frequency = 587;
-    CircuitPlayground.setPixelColor(1, 0,0,255);
+    for (int x = 0; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 0,0,255);
+    }
   } else if  (capsense[2] > 100) {
     frequency = 659;
-    CircuitPlayground.setPixelColor(3, 138,43,226);
+    for (int x = 3; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 138,43,226);
+    }
     vibration();
   } else if  (capsense[3] > 100) {
     frequency = 698;
-    CircuitPlayground.setPixelColor(4, 216,191,216);
+    for (int x = 4; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 216,191,216);
+    }
     vibration();
   } else if  (capsense[4] > 100) {
     frequency = 784;
-    CircuitPlayground.setPixelColor(5, 238,130,238);
+    for (int x = 5; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 238,130,238);
+    }
     vibration();
   } else if  (capsense[5] > 100) {
     frequency = 880;
-    CircuitPlayground.setPixelColor(6, 0,191,255);
+    for (int x = 6; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 0,191,255);
+    }
     vibration();
   } else if  (capsense[6] > 100) {
     frequency = 988;
-    CircuitPlayground.setPixelColor(8, 199,21,133);
+    for (int x = 8; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 199,21,133);
+    }
     vibration();
   } else if  (capsense[7] > 100) {
     frequency = 1046;
-    CircuitPlayground.setPixelColor(9, 138,43,226);
+    for (int x = 9; x < 10; x++){
+    CircuitPlayground.setPixelColor(x, 138,43,226);
+    }
     vibration();
   }
   delay(10);
