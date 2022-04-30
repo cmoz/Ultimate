@@ -1,0 +1,5 @@
+This is a wearable glove, 
+- that scans any colour object and 
+- returns the color to NeoPixels, 
+- the HEX value to an OLED, and then 
+- sends to computer keyboard (in notepad or any document opened) with the press of a button.
