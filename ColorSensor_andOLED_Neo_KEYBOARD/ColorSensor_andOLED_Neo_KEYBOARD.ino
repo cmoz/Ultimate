@@ -125,7 +125,9 @@ void loop() {
   Serial.println((int)b );
   Serial.println();
 
-  colorWipe(CircuitPlayground.strip.Color(r, g, b), 50);
+  colorWipe(strip.Color(r, g, b), 50);
+  //colorWipe(CircuitPlayground.strip.Color(r, g, b), 50);
+
 
   oled.clearDisplay();          // clear displa
 
@@ -151,12 +153,14 @@ void loop() {
 }
 
 void colorWipe(uint32_t color, int wait) {
-  for (int i = 0; i < CircuitPlayground.strip.numPixels(); i++) { // For each pixel in strip...
+
     /*
+    for (int i = 0; i < CircuitPlayground.strip.numPixels(); i++) { // For each pixel in strip...
     CircuitPlayground.strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
     CircuitPlayground.strip.show();                          //  Update strip to match
     */
     
+    for (int i = 0; i < strip.numPixels(); i++) { // For each pixel in strip...
     strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
     strip.show();                          //  Update strip to match
     
