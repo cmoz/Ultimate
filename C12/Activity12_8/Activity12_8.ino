@@ -58,8 +58,6 @@ void loop() {
   while (getID())
   {
     Serial.println(tagID);
-    //rainbowEffect(1, 2);
-    //strip.clear();
     if (tagID == redTagUID)
     {
       tagActions('1');
@@ -91,7 +89,6 @@ void loop() {
 
 
 void tagActions(char tag) {
-
   switch (tag) {
     case ('1'):
       Serial.println("red tag");
