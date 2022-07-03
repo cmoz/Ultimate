@@ -8,7 +8,7 @@
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 int neoPin = 1;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(8, neoPin, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, neoPin, NEO_GRB + NEO_KHZ800);
 
 byte readCard[4];
 String redTagUID = "7A6CA21A";  // REPLACE this Tag ID with your Tag ID!!!
@@ -45,7 +45,6 @@ void setup() {
   strip.show();
   rainbowEffect(1, 3);
   delay(300);
-  // checkBools();
   rfid.PCD_DumpVersionToSerial();	// Show details of MFRC522 Card Reader
   Serial.println(F("Scan tag..."));
   strip.fill((0, 0, 0), 0);
