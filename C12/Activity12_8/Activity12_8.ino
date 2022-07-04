@@ -24,12 +24,6 @@ boolean yellowTag = false;
 boolean greenTag = false;
 boolean blueTag = false;
 
-int card1 = redTag;
-int card2 = purpleTag;
-int card3 = yellowTag;
-int card4 = greenTag;
-int card5 = blueTag;
-
 void setup() {
   Serial.begin(9600);
   SPI.begin(); // init SPI bus
