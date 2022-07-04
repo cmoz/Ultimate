@@ -1,17 +1,20 @@
 #include <Adafruit_NeoPixel.h>
+
 int neoLine = 1;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(10, neoLine, NEO_GRB + NEO_KHZ800);
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, neoLine, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   Serial.begin(9600);
   strip.begin();
   strip.setBrightness(45);
   strip.show();
-
-  // The modified part of the code 
-  rainbowEffect(1, 3);
-  strip.fill((0,0,0), 0, 10);
-  strip.show();
+  
+//  add the rainbow function here
+//  rainbowEffect(1, 3); 
+//  strip.fill((0,0,0), 0, 10);
+//  strip.show();
+  
   delay(300);
   Serial.println("set up ready"); 
 }
@@ -20,11 +23,12 @@ void loop() {
 
 }
 
-//This is the modified function
-void rainbowEffect(uint8_t wait, int cycles) {
+// modify this function to take 2 variable
+
+void rainbowEffect(uint8_t wait) {
   uint16_t x, y;
 strip.setBrightness(45);
-  for (y = 0; y < 256 * cycles; y++) { // use the cycles variable 
+  for (y = 0; y < 256 * 5; y++) { // 5 cycles of all colors on wheel
     for (x = 0; x < strip.numPixels(); x++) {
       strip.setPixelColor(x, Wheel(((x * 256 / strip.numPixels()) + y) & 255));
     }
