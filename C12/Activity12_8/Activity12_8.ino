@@ -18,11 +18,11 @@ String greenTagUID = "DBC24335";
 String blueTagUID = "399DA1A3";
 String tagID = "";
 
-boolean redTag = false;
-boolean purpleTag = false;
-boolean yellowTag = false;
-boolean greenTag = false;
-boolean blueTag = false;
+bool redTag = false;
+bool purpleTag = false;
+bool yellowTag = false;
+bool greenTag = false;
+bool blueTag = false;
 
 void setup() {
   Serial.begin(9600);
