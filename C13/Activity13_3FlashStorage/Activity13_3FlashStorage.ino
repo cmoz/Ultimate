@@ -1,4 +1,5 @@
 #include <SPI.h>
+#include <FlashStorage.h>
 #include <MFRC522.h>
 #include <Adafruit_NeoPixel.h>
 
@@ -18,11 +19,17 @@ String greenTagUID = "DBC24335";
 String blueTagUID = "399DA1A3";
 String tagID = "";
 
-bool redTag = false;
-bool purpleTag = false;
-bool yellowTag = false;
-bool greenTag = false;
-bool blueTag = false;
+bool redTag;
+bool purpleTag;
+bool yellowTag;
+bool greenTag;
+bool blueTag;
+
+FlashStorage(my_flash_storeR, bool);
+FlashStorage(my_flash_storeP, bool);
+FlashStorage(my_flash_storeY, bool);
+FlashStorage(my_flash_storeG, bool);
+FlashStorage(my_flash_storeB, bool);
 
 void setup() {
   Serial.begin(9600);
@@ -42,6 +49,21 @@ void setup() {
   Serial.println(F("Scan tag..."));
   strip.fill((0, 0, 0), 0);
   strip.show();
+  //strip.clear();
+
+  redTag = my_flash_storeR.read();
+  purpleTag = my_flash_storeP.read();
+  yellowTag = my_flash_storeY.read();
+  greenTag = my_flash_storeG.read();
+  blueTag = my_flash_storeB.read();
+
+  Serial.println(redTag);
+  Serial.println(purpleTag);
+  Serial.println(yellowTag);
+  Serial.println(blueTag);
+  Serial.println(greenTag);
+  
+  setNeoColor();
 }
 
 void loop() {
@@ -54,19 +76,19 @@ void loop() {
     {
       tagActions('0');
     }
-    else if (tagID == purpleTagUID)
+    else if (tagID == yellowTagUID)
     {
       tagActions('1');
     }
-    else if (tagID == yellowTagUID)
+    else if (tagID == greenTagUID)
     {
       tagActions('2');
     }
-    else if (tagID == greenTagUID)
+    else if (tagID == blueTagUID)
     {
       tagActions('3');
     }
-    else if (tagID == blueTagUID)
+    else if (tagID == purpleTagUID)
     {
       tagActions('4');
     }
@@ -84,22 +106,29 @@ void tagActions(char tag) {
     case ('0'):
       Serial.println("red tag");
       redTag ^= true;
+      my_flash_storeR.write(redTag);
+      Serial.println(redTag);
       break;
     case ('1'):
-      Serial.println("purple tag");
-      purpleTag ^= true;
-      break;
-    case ('2'):
       Serial.println("yellow tag");
       yellowTag ^= true;
+      my_flash_storeY.write(yellowTag);
+      Serial.println(yellowTag);
       break;
-    case ('3'):
+    case ('2'):
       Serial.println("green tag");
       greenTag ^= true;
+      my_flash_storeG.write(greenTag);
       break;
-    case ('4'):
+    case ('3'):
       Serial.println("blue tag");
       blueTag ^= true;
+      my_flash_storeB.write(blueTag);
+      break;
+    case ('4'):
+      Serial.println("purple tag");
+      purpleTag ^= true;
+      my_flash_storeP.write(purpleTag);
       break;
     default:
       Serial.print(" ");
@@ -177,6 +206,8 @@ void checkAllOn() {
   if ((redTag == false) && (purpleTag == false) && (
         yellowTag == false) && (greenTag == false) && (blueTag == false)) {
     theaterChase(strip.Color(  0,   110, 127), 100);
+    strip.fill((150,150,255),0);
+    strip.show();
   }
 }
 
