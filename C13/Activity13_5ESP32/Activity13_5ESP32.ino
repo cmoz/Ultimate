@@ -1,15 +1,17 @@
 #include <SPI.h>
-#include <FlashStorage.h>
+#include <EEPROM.h>
 #include <MFRC522.h>
 #include <Adafruit_NeoPixel.h>
 
-#define SS_PIN 4
-#define RST_PIN 3
+#define EEPROM_SIZE 5
+
+#define SS_PIN 7
+#define RST_PIN 17
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
-int neoPin = 1;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, neoPin, NEO_GRB + NEO_KHZ800);
+int neoPin = 9;
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(35, neoPin, NEO_GRB + NEO_KHZ800);
 
 byte readCard[4];
 String redTagUID = "7A6CA21A";  // REPLACE this Tag ID with your Tag ID!!!
@@ -25,14 +27,9 @@ bool yellowTag;
 bool greenTag;
 bool blueTag;
 
-FlashStorage(my_flash_storeR, bool);
-FlashStorage(my_flash_storeP, bool);
-FlashStorage(my_flash_storeY, bool);
-FlashStorage(my_flash_storeG, bool);
-FlashStorage(my_flash_storeB, bool);
-
 void setup() {
   Serial.begin(9600);
+  EEPROM.begin(EEPROM_SIZE);
   SPI.begin(); // init SPI bus
   Serial.setTimeout(20000); // to wait for up to 20s in "read" functions
 
@@ -49,20 +46,20 @@ void setup() {
   Serial.println(F("Scan tag..."));
   strip.fill((0, 0, 0), 0);
   strip.show();
-  //strip.clear();
 
-  redTag = my_flash_storeR.read();
-  purpleTag = my_flash_storeP.read();
-  yellowTag = my_flash_storeY.read();
-  greenTag = my_flash_storeG.read();
-  blueTag = my_flash_storeB.read();
+  redTag = EEPROM.read(0);
+  purpleTag = EEPROM.read(1);
+  yellowTag = EEPROM.read(2);
+  greenTag = EEPROM.read(3);
+  blueTag = EEPROM.read(4);
 
   Serial.println(redTag);
   Serial.println(purpleTag);
   Serial.println(yellowTag);
   Serial.println(blueTag);
   Serial.println(greenTag);
-  
+
+  //checkBools();
   setNeoColor();
 }
 
@@ -106,29 +103,34 @@ void tagActions(char tag) {
     case ('0'):
       Serial.println("red tag");
       redTag ^= true;
-      my_flash_storeR.write(redTag);
       Serial.println(redTag);
+      EEPROM.write(0, redTag);
+      EEPROM.commit();
       break;
     case ('1'):
       Serial.println("yellow tag");
       yellowTag ^= true;
-      my_flash_storeY.write(yellowTag);
       Serial.println(yellowTag);
+      EEPROM.write(2, yellowTag);
+      EEPROM.commit();
       break;
     case ('2'):
       Serial.println("green tag");
       greenTag ^= true;
-      my_flash_storeG.write(greenTag);
+      EEPROM.write(3, greenTag);
+      EEPROM.commit();
       break;
     case ('3'):
       Serial.println("blue tag");
       blueTag ^= true;
-      my_flash_storeB.write(blueTag);
+      EEPROM.write(4, blueTag);
+      EEPROM.commit();
       break;
     case ('4'):
       Serial.println("purple tag");
       purpleTag ^= true;
-      my_flash_storeP.write(purpleTag);
+      EEPROM.write(1, purpleTag);
+      EEPROM.commit();
       break;
     default:
       Serial.print(" ");
@@ -139,50 +141,78 @@ void setNeoColor() {
 
   if (redTag == true) {
     Serial.println("set red Neo Color on");
+//    EEPROM.write(tagRedAddress, 1);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagRedAddress));
+//    Serial.println("");
     strip.setPixelColor(0, 255, 0, 0);
     strip.show();
     delay(100);
   } else if (redTag == false) {
+//    EEPROM.write(tagRedAddress, 0);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagRedAddress));
+//    Serial.println("");
     strip.setPixelColor(0, 0, 0, 0);
     strip.show();
   }
 
   if (yellowTag == true) {
     Serial.println("set yellow Neo Color on");
+//    EEPROM.write(tagYellowAddress, 1);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagYellowAddress));
+//    Serial.println("");
     strip.setPixelColor(1, 155, 115, 0);
     strip.show();
     delay(100);
   } else if (yellowTag == false) {
+//    EEPROM.write(tagYellowAddress, 0);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagYellowAddress));
+//    Serial.println("");
     strip.setPixelColor(1, 0, 0, 0);
     strip.show();
   }
 
   if (greenTag == true) {
     Serial.println("set green Neo Color on");
+//    EEPROM.write(tagGreenAddress, 1);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagGreenAddress));
+//    Serial.println("");
     strip.setPixelColor(2, 0, 150, 0);
     strip.show();
     delay(100);
   } else  if (greenTag == false) {
+//    EEPROM.write(tagGreenAddress, 0);
+//    Serial.print("EEprom address ");
+//    Serial.println(EEPROM.read(tagGreenAddress));
+//    Serial.println("");
     strip.setPixelColor(2, 0, 0, 0);
     strip.show();
   }
 
   if (blueTag == true) {
     Serial.println("set blue Neo Color on");
+//    EEPROM.write(tagBlueAddress, 1);
     strip.setPixelColor(3, 0, 0, 255);
     strip.show();
     delay(100);
   } else if (blueTag == false) {
+//    EEPROM.write(tagBlueAddress, 0);
     strip.setPixelColor(3, 0, 0, 0);
     strip.show();
   }
 
   if (purpleTag == true) {
     Serial.println("set purple Neo Color on");
+//    EEPROM.write(tagPurpleAddress, 1);
     strip.setPixelColor(4, 255, 0, 255);
     strip.show();
     delay(100);
   } else if (purpleTag == false) {
+//    EEPROM.write(tagPurpleAddress, 0);
     strip.setPixelColor(4, 0, 0, 0);
     strip.show();
   }
@@ -206,7 +236,7 @@ void checkAllOn() {
   if ((redTag == false) && (purpleTag == false) && (
         yellowTag == false) && (greenTag == false) && (blueTag == false)) {
     theaterChase(strip.Color(  0,   110, 127), 100);
-    strip.fill((150,150,255),0);
+    strip.fill((150, 150, 255), 0);
     strip.show();
   }
 }
@@ -276,3 +306,34 @@ void theaterChase(uint32_t color, int wait) {
   }
 
 }
+
+
+// *********************** CHECK BOOLS ***************************//
+/*void checkBools() {
+  if (redTag == 0) {
+    redTag = false;
+  } else if (redTag == 1) {
+    redTag = true;
+  }
+  if (yellowTag == 0) {
+    yellowTag = false;
+  } else if (yellowTag == 1) {
+    yellowTag = true;
+  }
+  if (greenTag == 0) {
+    greenTag = false;
+  } else if (greenTag == 1) {
+    greenTag = true;
+  }
+  if (blueTag == 0) {
+    blueTag = false;
+  } else if (blueTag == 1) {
+    blueTag = true;
+  }
+  if (purpleTag == 0) {
+    purpleTag = false;
+  } else if (purpleTag == 1) {
+    purpleTag = true;
+  }
+}
+*/
