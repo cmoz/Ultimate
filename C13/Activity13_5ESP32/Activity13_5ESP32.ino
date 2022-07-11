@@ -5,27 +5,27 @@
 
 #define EEPROM_SIZE 5
 
-#define SS_PIN 7
-#define RST_PIN 17
+#define SS_PIN 7  // SCK pin on the QT Py ESP32-S2
+#define RST_PIN 17 // A1 pin 
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
-int neoPin = 9;
+int neoPin = 8; // A3 pin
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(35, neoPin, NEO_GRB + NEO_KHZ800);
 
 byte readCard[4];
 String redTagUID = "7A6CA21A";  // REPLACE this Tag ID with your Tag ID!!!
-String purpleTagUID = "8C4CFF4";
 String yellowTagUID = "B6E0972B";
 String greenTagUID = "DBC24335";
 String blueTagUID = "399DA1A3";
+String purpleTagUID = "8C4CFF4";
 String tagID = "";
 
 bool redTag;
-bool purpleTag;
 bool yellowTag;
 bool greenTag;
 bool blueTag;
+bool purpleTag;
 
 void setup() {
   Serial.begin(9600);
@@ -48,18 +48,11 @@ void setup() {
   strip.show();
 
   redTag = EEPROM.read(0);
-  purpleTag = EEPROM.read(1);
-  yellowTag = EEPROM.read(2);
-  greenTag = EEPROM.read(3);
-  blueTag = EEPROM.read(4);
+  yellowTag = EEPROM.read(1);
+  greenTag = EEPROM.read(2);
+  blueTag = EEPROM.read(3);
+  purpleTag = EEPROM.read(4);
 
-  Serial.println(redTag);
-  Serial.println(purpleTag);
-  Serial.println(yellowTag);
-  Serial.println(blueTag);
-  Serial.println(greenTag);
-
-  //checkBools();
   setNeoColor();
 }
 
@@ -68,7 +61,9 @@ void loop() {
   while (getID())
   {
     Serial.println(tagID);
+    // everytime a tag is scanned the NeoPixels will react 
     rainbowEffect(1, 1);
+    
     if (tagID == redTagUID)
     {
       tagActions('0');
@@ -103,33 +98,31 @@ void tagActions(char tag) {
     case ('0'):
       Serial.println("red tag");
       redTag ^= true;
-      Serial.println(redTag);
       EEPROM.write(0, redTag);
       EEPROM.commit();
       break;
     case ('1'):
       Serial.println("yellow tag");
       yellowTag ^= true;
-      Serial.println(yellowTag);
-      EEPROM.write(2, yellowTag);
+      EEPROM.write(1, yellowTag);
       EEPROM.commit();
       break;
     case ('2'):
       Serial.println("green tag");
       greenTag ^= true;
-      EEPROM.write(3, greenTag);
+      EEPROM.write(2, greenTag);
       EEPROM.commit();
       break;
     case ('3'):
       Serial.println("blue tag");
       blueTag ^= true;
-      EEPROM.write(4, blueTag);
+      EEPROM.write(3, blueTag);
       EEPROM.commit();
       break;
     case ('4'):
       Serial.println("purple tag");
       purpleTag ^= true;
-      EEPROM.write(1, purpleTag);
+      EEPROM.write(4, purpleTag);
       EEPROM.commit();
       break;
     default:
@@ -141,88 +134,55 @@ void setNeoColor() {
 
   if (redTag == true) {
     Serial.println("set red Neo Color on");
-//    EEPROM.write(tagRedAddress, 1);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagRedAddress));
-//    Serial.println("");
     strip.setPixelColor(0, 255, 0, 0);
     strip.show();
     delay(100);
   } else if (redTag == false) {
-//    EEPROM.write(tagRedAddress, 0);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagRedAddress));
-//    Serial.println("");
     strip.setPixelColor(0, 0, 0, 0);
     strip.show();
   }
 
   if (yellowTag == true) {
     Serial.println("set yellow Neo Color on");
-//    EEPROM.write(tagYellowAddress, 1);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagYellowAddress));
-//    Serial.println("");
     strip.setPixelColor(1, 155, 115, 0);
     strip.show();
     delay(100);
   } else if (yellowTag == false) {
-//    EEPROM.write(tagYellowAddress, 0);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagYellowAddress));
-//    Serial.println("");
     strip.setPixelColor(1, 0, 0, 0);
     strip.show();
   }
 
   if (greenTag == true) {
     Serial.println("set green Neo Color on");
-//    EEPROM.write(tagGreenAddress, 1);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagGreenAddress));
-//    Serial.println("");
     strip.setPixelColor(2, 0, 150, 0);
     strip.show();
     delay(100);
   } else  if (greenTag == false) {
-//    EEPROM.write(tagGreenAddress, 0);
-//    Serial.print("EEprom address ");
-//    Serial.println(EEPROM.read(tagGreenAddress));
-//    Serial.println("");
     strip.setPixelColor(2, 0, 0, 0);
     strip.show();
   }
 
   if (blueTag == true) {
     Serial.println("set blue Neo Color on");
-//    EEPROM.write(tagBlueAddress, 1);
     strip.setPixelColor(3, 0, 0, 255);
     strip.show();
     delay(100);
   } else if (blueTag == false) {
-//    EEPROM.write(tagBlueAddress, 0);
     strip.setPixelColor(3, 0, 0, 0);
     strip.show();
   }
 
   if (purpleTag == true) {
     Serial.println("set purple Neo Color on");
-//    EEPROM.write(tagPurpleAddress, 1);
     strip.setPixelColor(4, 255, 0, 255);
     strip.show();
     delay(100);
   } else if (purpleTag == false) {
-//    EEPROM.write(tagPurpleAddress, 0);
     strip.setPixelColor(4, 0, 0, 0);
     strip.show();
   }
 
   delay(15);
-  Serial.println(redTag);
-  Serial.println(yellowTag);
-  Serial.println(greenTag);
-  Serial.println(blueTag);
-  Serial.println(purpleTag);
 
   checkAllOn();
 }
@@ -304,36 +264,4 @@ void theaterChase(uint32_t color, int wait) {
     strip.fill((50, 50, 50), 0);
     strip.show();
   }
-
 }
-
-
-// *********************** CHECK BOOLS ***************************//
-/*void checkBools() {
-  if (redTag == 0) {
-    redTag = false;
-  } else if (redTag == 1) {
-    redTag = true;
-  }
-  if (yellowTag == 0) {
-    yellowTag = false;
-  } else if (yellowTag == 1) {
-    yellowTag = true;
-  }
-  if (greenTag == 0) {
-    greenTag = false;
-  } else if (greenTag == 1) {
-    greenTag = true;
-  }
-  if (blueTag == 0) {
-    blueTag = false;
-  } else if (blueTag == 1) {
-    blueTag = true;
-  }
-  if (purpleTag == 0) {
-    purpleTag = false;
-  } else if (purpleTag == 1) {
-    purpleTag = true;
-  }
-}
-*/
