@@ -28,7 +28,7 @@ void setup() {
   Serial.begin(9600);
   SPI.begin(); // init SPI bus
   Serial.setTimeout(20000); // to wait for up to 20s in "read" functions
-  while (!Serial) { }
+
   // you must call this initialization function for the RFID reader!
   rfid.PCD_Init(); // MFRC522
   delay(4);
