@@ -14,7 +14,7 @@ AdafruitIO_Feed *scannedTags = io.feed("tags");
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 int neoPin = 8;  // A3 pin
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(35, neoPin, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(5, neoPin, NEO_GRB + NEO_KHZ800);
 
 byte readCard[4];
 String redTagUID = "7A6CA21A";  // REPLACE this Tag ID with your Tag ID!!!
